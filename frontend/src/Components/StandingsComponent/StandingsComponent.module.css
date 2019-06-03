@@ -1,0 +1,27 @@
+.wrapper {
+    width: auto;
+    margin: 60px;
+}
+
+.wrapper h3 {
+  font-weight: bold;
+}
+
+.wrapper h4 {
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.wrapper h5 {
+  font-size: 15px;
+}
+
+.buttons {
+    padding: 15px;
+    text-align: center;
+}
+
+.wrapper img {
+  width: 27px;
+  height: 27px;
+}

@@ -1,0 +1,23 @@
+.singlePlayerWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.headshotIMG {
+  height: 168px;
+  width: 168px;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  margin-top: -80px;
+}
+
+.teamLogo {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.actionIMG {
+  max-height: 450px;
+}
