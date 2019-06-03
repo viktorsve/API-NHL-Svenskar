@@ -8,6 +8,7 @@ Det primära syftet med applikationen är att skapa en sida som gör det enklare
 
 Statistiken visas i form av en tabell där användaren själv kan sortera efter olika kategorier. Det går även att filtrera tabellen efter vilken position som spelarna har. Man kan även visa separata tabeller för slutspel och grundserie. Om man klickar sig vidare till en individuell spelare så får man mer detaljerad statistik och kan även se bilder på spelaren i fråga. På startsidan visas ett nyhetsflöde med relevanta nyheter om NHL och även resultaten från de senaste matcherna. Under fliken tabell så kan man se poängställningen för lagen i NHL och även visa hur lagen ligger till i respektive konferens. Under fliken resultat kan man se de senaste resultaten och kommande matcher.  
 
-Användaren ska även kunna skapa ett konto där hen kan "likea" spelare och på så sätt kunna få upp information om specifika spelare som personen är mer intresserad av.
-
 ### Usecasebeskrivning
+Användaren ska kunna skapa ett konto där hen kan "gilla" spelare och på så sätt kunna få upp information om specifika spelare som personen är mer intresserad av.
+
+Det ska även finnas en vy/tabell där de mest "gillade"(populäraste) spelarna visas. 
