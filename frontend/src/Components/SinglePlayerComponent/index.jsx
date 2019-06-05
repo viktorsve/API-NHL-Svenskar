@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import styles from './SinglePlayerComponent.module.css';
 import DetailedPlayerInfoComponent from '../DetailedPlayerInfoComponent';
 
 // Component for rendering info and images of one specific player.
+/* eslint-disable react/destructuring-assignment */
 class SinglePlayerComponent extends Component {
   static propTypes = {
-    players: PropTypes.arrayOf(PropTypes.object).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
         cell: PropTypes.string,
@@ -21,17 +22,51 @@ class SinglePlayerComponent extends Component {
     match: {},
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      starOrNot: true,
+      singlePlayer: null,
+      errorState: null,
+    };
+  }
+
+  componentDidMount() {
+    const specificPlayerID = this.props.match.params.cell;
+
+    axios.get(`https://statsapi.web.nhl.com/api/v1/people/${specificPlayerID}/?expand=person.stats&stats=yearByYear`)
+      .then((res) => {
+        const singlePlayer = res.data;
+        this.setState({ singlePlayer });
+      })
+      .catch((error) => {
+        const errorState = error.message;
+        this.setState({ errorState });
+      });
+  }
+
+  toggleStar = () => {
+    this.setState(prevState => ({
+      starOrNot: !prevState.starOrNot,
+    }));
+  }
+
+  handleKeyEvent = () => {
+    this.setState(prevState => ({
+      starOrNot: !prevState.starOrNot,
+    }));
+  }
+
   render() {
+    if (!this.state.singlePlayer) {
+      return <p>{this.state.errorState}</p>;
+    }
     /* eslint-disable react/destructuring-assignment */
     const cellString = this.props.match.params.cell;
     const cell = parseInt(cellString, 10);
 
     // Comparing player id from match.params.cell with the players array from our global state.
-    const singlePlayer = this.props.players.find(onePlayer => onePlayer.id === cell);
-
-    if (!singlePlayer) {
-      return <DetailedPlayerInfoComponent />;
-    }
+    const singlePlayer = this.state.singlePlayer.people[0];
 
     const actionIMG = `https://nhl.bamcontent.com/images/actionshots/${cell}.jpg`;
 
@@ -39,7 +74,6 @@ class SinglePlayerComponent extends Component {
 
     const teamID = singlePlayer.currentTeam.id;
     const teamLogo = `https://www-league.nhlstatic.com/nhl.com/builds/site-core/a2d98717aeb7d8dfe2694701e13bd3922887b1f2_1542226749/images/logos/team/current/team-${teamID}-dark.svg`;
-
 
     return (
       <div className={styles.singlePlayerWrapper}>
@@ -63,6 +97,31 @@ class SinglePlayerComponent extends Component {
           {' Född: '}
           {singlePlayer.birthCity}
           {' '}
+        </p>
+        <p>
+          {' '}
+Favoritmarkera spelaren
+          {' '}
+          {
+          this.state.starOrNot ? (
+            <i
+              className={`far fa-star ${styles.starHover}`}
+              onClick={this.toggleStar}
+              onKeyPress={this.handleKeyEvent}
+              role="button"
+              tabIndex="0"
+            />
+          )
+            : (
+              <i
+                className={`fas fa-star ${styles.clickedStar}`}
+                onClick={this.toggleStar}
+                onKeyPress={this.handleKeyEvent}
+                role="button"
+                tabIndex="0"
+              />
+            )
+        }
         </p>
         <DetailedPlayerInfoComponent />
       </div>

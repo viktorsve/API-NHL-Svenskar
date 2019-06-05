@@ -21,3 +21,22 @@
 .actionIMG {
   max-height: 450px;
 }
+
+.like {
+  display: flex;
+  align-items: center;
+}
+
+.like p {
+  margin-bottom: 0;
+}
+.starHover {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.clickedStar {
+  cursor: pointer;
+  color: 	#FFD700;
+  font-size: 22px;
+}
