@@ -34,6 +34,12 @@ class NavbarComponent extends Component {
             <NavLink className="nav-link ml-3" to="/resultat">Resultat</NavLink>
           </Nav>
           <Form inline>
+            <Nav className="mr-auto">
+              <NavLink className="nav-link" to="/login">
+Logga in
+                <i className={`fas fa-user fa-lg ${styles.fontAwesomeStyle}`} />
+              </NavLink>
+            </Nav>
             <FormControl type="text" placeholder="Sök" className="mr-sm-2" />
             <Button variant="outline-secondary">Sök</Button>
           </Form>

@@ -7,6 +7,7 @@ import Homepage from './Screens/Homepage';
 import Player from './Screens/Player';
 import Players from './Screens/Players';
 import Results from './Screens/Results';
+import Login from './Screens/Login';
 import Standings from './Screens/Standings';
 import NavbarComponent from './Components/NavbarComponent';
 import FooterComponent from './Components/FooterComponent';
@@ -48,6 +49,7 @@ class App extends Component {
                 <Route path="/spelare" component={Players} />
                 <Route path="/resultat" component={Results} />
                 <Route path="/tabell" component={Standings} />
+                <Route path="/login" component={Login} />
               </Switch>
             </Router>
             <FooterComponent />
