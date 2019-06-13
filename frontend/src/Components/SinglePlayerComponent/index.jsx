@@ -100,29 +100,36 @@ class SinglePlayerComponent extends Component {
         </p>
         <p>
           {' '}
-Favoritmarkera spelaren
+          Favoritmarkera spelaren
           {' '}
           {
-          this.state.starOrNot ? (
-            <i
-              className={`far fa-star ${styles.starHover}`}
-              onClick={this.toggleStar}
-              onKeyPress={this.handleKeyEvent}
-              role="button"
-              tabIndex="0"
-            />
-          )
-            : (
+            this.state.starOrNot ? (
               <i
-                className={`fas fa-star ${styles.clickedStar}`}
+                className={`far fa-star ${styles.starHover}`}
                 onClick={this.toggleStar}
                 onKeyPress={this.handleKeyEvent}
                 role="button"
                 tabIndex="0"
               />
             )
-        }
+              : (
+                <i
+                  className={`fas fa-star ${styles.clickedStar}`}
+                  onClick={this.toggleStar}
+                  onKeyPress={this.handleKeyEvent}
+                  role="button"
+                  tabIndex="0"
+                />
+              )
+          }
+
         </p>
+        <span>
+          {' '}
+          Antal följare
+          {' '}
+          <span>0</span>
+        </span>
         <DetailedPlayerInfoComponent />
       </div>
     );
