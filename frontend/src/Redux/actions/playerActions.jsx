@@ -1,26 +1,33 @@
 import axios from 'axios';
 
+import {
+  ADD_PLAYERS,
+  ADD_GAMES,
+  FETCH_LOADING,
+  FETCH_ERROR,
+} from './types';
+
 // Action creator that returns an action object
 export const addPlayers = items => ({
-  type: 'ADD_PLAYERS',
+  type: ADD_PLAYERS,
   players: items,
 });
 
 // Action creator that returns an action object
 export const addGames = items => ({
-  type: 'ADD_GAMES',
+  type: ADD_GAMES,
   games: items,
 });
 
 // Action creator that returns an action object
 export const fetchLoading = bool => ({
-  type: 'FETCH_LOADING',
+  type: FETCH_LOADING,
   loading: bool,
 });
 
 // Action creator that returns an action object
 export const fetchError = bool => ({
-  type: 'FETCH_ERROR',
+  type: FETCH_ERROR,
   error: bool,
 });
 

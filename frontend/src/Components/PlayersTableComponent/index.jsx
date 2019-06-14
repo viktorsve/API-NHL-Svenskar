@@ -7,17 +7,11 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { fetchPlayers } from '../../Redux/Action';
 import './PlayersTableComponent.css';
+import { fetchPlayers } from '../../Redux/actions/playerActions';
 
 // Component used for rendering our table of players
 class PlayersTableComponent extends Component {
-  static propTypes = {
-    players: PropTypes.arrayOf(PropTypes.object).isRequired,
-    fetchPlayers: PropTypes.func.isRequired,
-    error: PropTypes.bool.isRequired,
-  };
-
   state = {
     showGoalie: false,
   }
@@ -243,17 +237,18 @@ class PlayersTableComponent extends Component {
 }
 /* eslint-enable react/destructuring-assignment */
 
+PlayersTableComponent.propTypes = {
+  players: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchPlayers: PropTypes.func.isRequired,
+  error: PropTypes.bool.isRequired,
+};
+
 // Connects our component with the data in our Redux store
 function mapStateToProps(state) {
   return {
-    players: state.players,
-    error: state.error,
+    players: state.player.players,
+    error: state.player.error,
   };
 }
 
-// Used for dispatching actions to our store
-const mapDispatchToProps = {
-  fetchPlayers,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlayersTableComponent);
+export default connect(mapStateToProps, { fetchPlayers })(PlayersTableComponent);

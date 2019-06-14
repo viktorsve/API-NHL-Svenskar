@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import axios from 'axios';
-import { fetchGames } from '../../Redux/Action';
+import { fetchGames } from '../../Redux/actions/playerActions';
 import styles from './LatestResultsComponent.module.css';
 
 // Component used for displaying results
@@ -90,14 +90,9 @@ class LatestResultsComponent extends Component {
 // Connects our component with the data in our Redux store
 function mapStateToProps(state) {
   return {
-    games: state.games,
-    error: state.error,
+    games: state.player.games,
+    error: state.player.error,
   };
 }
 
-// Used for dispatching actions to our store
-const mapDispatchToProps = {
-  fetchGames,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LatestResultsComponent);
+export default connect(mapStateToProps, { fetchGames })(LatestResultsComponent);
