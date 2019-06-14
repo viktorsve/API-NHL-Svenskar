@@ -35,6 +35,8 @@ class SinglePlayerComponent extends Component {
   componentDidMount() {
     const specificPlayerID = this.props.match.params.cell;
 
+    // Hämta användaren och styr vilken stjräna som ska visas, typ.
+
     axios.get(`http://localhost:2000/counter/${specificPlayerID}`).then((res) => {
       this.setState({
         likes: res.data.count,
@@ -53,6 +55,8 @@ class SinglePlayerComponent extends Component {
   }
 
   likeOnePlayer = () => {
+    // skapa en variabel som tar in användarens username.
+    const username = localStorage.getItem('username');
     this.setState(prevState => ({
       starOrNot: !prevState.starOrNot,
       likes: prevState.likes + 1,
@@ -63,9 +67,18 @@ class SinglePlayerComponent extends Component {
       count: 1,
     };
     axios.put(`http://localhost:2000/counter/${specificPlayerID}`, player).then(res => console.log(res));
+
+    const playerToPost = {
+      playerId: this.state.singlePlayer.people[0].id,
+      name: this.state.singlePlayer.people[0].fullName,
+    };
+    axios.post(`http://localhost:2000/counter/${username}`, playerToPost).then(res => console.log(res));
   }
 
+
   dislikeOnePlayer = () => {
+    // skapa en variabel som tar in användarens username.
+    const username = 'pelle';
     this.setState(prevState => ({
       starOrNot: !prevState.starOrNot,
       likes: prevState.likes - 1,
@@ -76,7 +89,10 @@ class SinglePlayerComponent extends Component {
       count: -1,
     };
     axios.put(`http://localhost:2000/counter/${specificPlayerID}`, player).then(res => console.log(res));
+
+    axios.delete(`http://localhost:2000/login/${username}`, { playerId: specificPlayerID }).then(res => console.log(res));
   }
+
 
   handleKeyEvent = () => {
     this.setState(prevState => ({
@@ -127,7 +143,7 @@ class SinglePlayerComponent extends Component {
         </p>
         <p>
           {' '}
-          Favoritmarkera spelaren
+          Spara spelaren
           {' '}
           {
             this.state.starOrNot ? (
