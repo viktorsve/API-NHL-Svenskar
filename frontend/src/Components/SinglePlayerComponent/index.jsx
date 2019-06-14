@@ -28,11 +28,18 @@ class SinglePlayerComponent extends Component {
       starOrNot: true,
       singlePlayer: null,
       errorState: null,
+      likes: null,
     };
   }
 
   componentDidMount() {
     const specificPlayerID = this.props.match.params.cell;
+
+    axios.get(`http://localhost:2000/counter/${specificPlayerID}`).then((res) => {
+      this.setState({
+        likes: res.data.count,
+      });
+    });
 
     axios.get(`https://statsapi.web.nhl.com/api/v1/people/${specificPlayerID}/?expand=person.stats&stats=yearByYear`)
       .then((res) => {
@@ -45,10 +52,30 @@ class SinglePlayerComponent extends Component {
       });
   }
 
-  toggleStar = () => {
+  likeOnePlayer = () => {
     this.setState(prevState => ({
       starOrNot: !prevState.starOrNot,
+      likes: prevState.likes + 1,
     }));
+    const specificPlayerID = this.props.match.params.cell;
+    const player = {
+      id: this.state.singlePlayer.people[0].id,
+      count: 1,
+    };
+    axios.put(`http://localhost:2000/counter/${specificPlayerID}`, player).then(res => console.log(res));
+  }
+
+  dislikeOnePlayer = () => {
+    this.setState(prevState => ({
+      starOrNot: !prevState.starOrNot,
+      likes: prevState.likes - 1,
+    }));
+    const specificPlayerID = this.props.match.params.cell;
+    const player = {
+      id: this.state.singlePlayer.people[0].id,
+      count: -1,
+    };
+    axios.put(`http://localhost:2000/counter/${specificPlayerID}`, player).then(res => console.log(res));
   }
 
   handleKeyEvent = () => {
@@ -106,7 +133,7 @@ class SinglePlayerComponent extends Component {
             this.state.starOrNot ? (
               <i
                 className={`far fa-star ${styles.starHover}`}
-                onClick={this.toggleStar}
+                onClick={this.state.starOrNot ? this.likeOnePlayer : this.dislikeOnePlayer}
                 onKeyPress={this.handleKeyEvent}
                 role="button"
                 tabIndex="0"
@@ -115,7 +142,7 @@ class SinglePlayerComponent extends Component {
               : (
                 <i
                   className={`fas fa-star ${styles.clickedStar}`}
-                  onClick={this.toggleStar}
+                  onClick={this.state.starOrNot ? this.likeOnePlayer : this.dislikeOnePlayer}
                   onKeyPress={this.handleKeyEvent}
                   role="button"
                   tabIndex="0"
@@ -128,7 +155,7 @@ class SinglePlayerComponent extends Component {
           {' '}
           Antal följare
           {' '}
-          <span>0</span>
+          <span>{this.state.likes}</span>
         </span>
         <DetailedPlayerInfoComponent />
       </div>
