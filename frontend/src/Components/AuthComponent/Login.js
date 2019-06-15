@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import { loginUser } from '../../Redux/actions/authActions';
 import './Login.css';
 
@@ -43,86 +46,65 @@ onSubmit = (e) => {
   };
 
   this.props.loginUser(userData);
+  console.log(this.props.auth.user);
 };
 
 render() {
+  const { errors } = this.state;
   return (
-    <div className="container">
-      <div style={{ paddingTop: '30px' }} className="row">
-        <div className="col s8 offset-s2">
-          <Link to="/" className="btn-flat waves-effect">
-            <i className="material-icons left">keyboard_backspace</i>
-            {' '}
-            Back to
-            home
-          </Link>
-          <div className="col s12" style={{ paddingLeft: '11.250px' }}>
-            <h4>
-              <b>Logga in</b>
-              {' '}
-              below
-            </h4>
-            <p className="grey-text text-darken-1">
+    <Fragment>
+      <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>Logga in</Modal.Title>
+        </Modal.Header>
 
-              Don't have an account?
-              <Link to="/register">Register</Link>
-            </p>
-          </div>
-          <form noValidate onSubmit={this.onSubmit}>
-            <div className="input-field col s12">
-              <input
+        <Modal.Body>
+          <Form noValidate onSubmit={this.onSubmit}>
+            <Form.Group>
+              <Form.Label htmlFor="username">Användarnamn</Form.Label>
+              <Form.Control
                 onChange={this.onChange}
                 value={this.state.username}
-                error={this.state.errors.username}
+                error={errors.username}
                 id="username"
                 type="text"
                 className={classnames('', {
-                  invalid: this.state.errors.username || this.state.errors.usernamenotfound,
+                  invalid: errors.username || errors.usernamenotfound,
                 })}
+                placeholder="Skriv in ditt användarnamn"
               />
-              <label htmlFor="username">Username</label>
-              <span className="red-text">
-                {this.state.errors.username}
-                {this.state.errors.usernamenotfound}
+              <span className="text-danger">
+                {errors.username}
+                {errors.usernamenotfound}
               </span>
-            </div>
-            <div className="input-field col s12">
-              <input
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label htmlFor="password">Lösenord</Form.Label>
+              <Form.Control
                 onChange={this.onChange}
                 value={this.state.password}
-                error={this.state.errors.password}
+                error={errors.password}
                 id="password"
                 type="password"
                 className={classnames('', {
-                  invalid: this.state.errors.password || this.state.errors.passwordincorrect,
+                  invalid: errors.password || errors.passwordincorrect,
                 })}
+                placeholder="Lösenord"
               />
-              <label htmlFor="password">Password</label>
-              <span className="red-text">
-                {this.state.errors.password}
-                {this.state.errors.passwordincorrect}
+              <span className="text-danger">
+                {errors.password}
+                {errors.passwordincorrect}
               </span>
-            </div>
-            <div className="col s12" style={{ paddingLeft: '11.250px' }}>
-              <button
-                style={{
-                  width: '150px',
-                  borderRadius: '3px',
-                  letterSpacing: '1.5px',
-                  marginTop: '1rem',
-                }}
-                type="submit"
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-              >
-
-                Login
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div className="push" />
-    </div>
+            </Form.Group>
+            <Modal.Footer>
+              <Link to="/register">Registrera</Link>
+              <Button variant="primary" type="submit">Logga in</Button>
+            </Modal.Footer>
+          </Form>
+        </Modal.Body>
+      </Modal.Dialog>
+    </Fragment>
   );
 }
 }

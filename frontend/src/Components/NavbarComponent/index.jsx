@@ -17,6 +17,7 @@ class NavbarComponent extends Component {
   onLogoutClick = (e) => {
     e.preventDefault();
     this.props.logoutUser();
+    localStorage.clear();
   };
 
   render() {
@@ -43,12 +44,15 @@ class NavbarComponent extends Component {
           </Nav>
           <Nav className="ml-auto right">
             {this.props.auth.isAuthenticated ? (
-              <NavLink className="nav-link ml-3 right" to="/login" onClick={this.onLogoutClick}>Logga ut</NavLink>
+              <Nav>
+                <NavLink className="nav-link ml-3 right" to="/dashboard">Mitt konto</NavLink>
+                <NavLink className="nav-link ml-3 right" to="/login" onClick={this.onLogoutClick}>Logga ut</NavLink>
+              </Nav>
             ) : (
               <NavLink className="nav-link ml-3 right" to="/login">Logga in</NavLink>
             )}
           </Nav>
-          <Form inline>
+          <Form inline className={`${styles.form} form`}>
             <FormControl type="text" placeholder="Sök" className="mr-sm-2" />
             <Button variant="outline-secondary">Sök</Button>
           </Form>
