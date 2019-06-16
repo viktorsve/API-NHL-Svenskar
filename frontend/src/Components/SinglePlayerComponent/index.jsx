@@ -36,6 +36,15 @@ class SinglePlayerComponent extends Component {
     const specificPlayerID = this.props.match.params.cell;
 
     // Hämta användaren och styr vilken stjräna som ska visas, typ.
+    // const username = localStorage.getItem('username');
+
+    // axios.get(`http://localhost:2000/counter/${username}`).then(res => {
+    //   if (res.data.id === Singleplayer.id) {
+    //     this.setState(prevState => ({
+    //       starOrNot: !prevState.starOrNot,
+    //     }));
+    //   }
+    // })
 
     axios.get(`http://localhost:2000/counter/${specificPlayerID}`).then((res) => {
       this.setState({
