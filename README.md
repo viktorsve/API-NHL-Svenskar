@@ -16,5 +16,5 @@ Det ska även finnas en vy/tabell där de mest "gillade" (populäraste) spelarna
 ### https://trello.com/b/JcwnBkra/react-project
 
 ### Backend
-https://github.com/viktorsve/nhl-backend
+https://github.com/viktorsve/nhl-backend  
 http://nhl-backend.herokuapp.com
