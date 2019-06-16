@@ -11,6 +11,10 @@ Statistiken visas i form av en tabell där användaren själv kan sortera efter 
 ### Usecasebeskrivning
 Användaren ska kunna skapa ett konto där hen kan "gilla" spelare och på så sätt kunna få upp information om specifika spelare som personen är mer intresserad av.
 
-Det ska även finnas en vy/tabell där de mest "gillade"(populäraste) spelarna visas. 
+Det ska även finnas en vy/tabell där de mest "gillade" (populäraste) spelarna visas. 
 
 ### https://trello.com/b/JcwnBkra/react-project
+
+### Backend
+https://github.com/viktorsve/nhl-backend
+http://nhl-backend.herokuapp.com
