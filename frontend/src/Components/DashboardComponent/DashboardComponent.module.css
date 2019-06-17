@@ -1,0 +1,15 @@
+.fontStyle {
+  font-size: 100px;
+  margin: 1rem;
+}
+
+.accoutWrapper {
+  display: flex;
+  margin: 1rem;
+  text-align: center;
+}
+
+.cardStyle {
+  margin-right: 1rem;
+  background-color: #eee !important;
+}
