@@ -58,7 +58,7 @@ class GameScheduleComponent extends Component {
           dates,
         });
       });
-    axios.get('https://statsapi.web.nhl.com/api/v1/teams/')
+    axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/teams/`)
       .then((response) => {
         this.setState({
           data: response.data.teams,
