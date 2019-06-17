@@ -25,7 +25,7 @@ export default class StandingsComponent extends Component {
 
   // Fetches the standings data from the API
   componentDidMount() {
-    axios.get('https://statsapi.web.nhl.com/api/v1/standings/byLeague')
+    axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/standings/byLeague`)
       .then((result) => {
         const items = result.data.records[0].teamRecords.map(team => team);
         const teams = [];
@@ -284,35 +284,42 @@ export default class StandingsComponent extends Component {
         <h5>
           <strong>GP: </strong>
 
+
             Spelade matcher
         </h5>
         <h5>
           <strong>W: </strong>
+
 
             Vinster
         </h5>
         <h5>
           <strong>L: </strong>
 
+
             Förluster
         </h5>
         <h5>
           <strong>OT: </strong>
+
 
             Overtime
         </h5>
         <h5>
           <strong>Points: </strong>
 
+
             Poäng
         </h5>
         <h5>
           <strong>G: </strong>
 
+
             Mål
         </h5>
         <h5>
           <strong>GA: </strong>
+
 
             Insläppta mål
         </h5>

@@ -7,6 +7,11 @@ import {
   FETCH_ERROR,
 } from './types';
 
+const headers = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
+};
+
 // Action creator that returns an action object
 export const addPlayers = items => ({
   type: ADD_PLAYERS,
@@ -34,9 +39,10 @@ export const fetchError = bool => ({
 // Using redux-thunk we can make our action creator return a
 // function instead of an action object. This allows us to make asynchronous
 // calls that we will dispatch the relevant data to our redux store when it is ready.
+
 export const fetchPlayers = url => (dispatch) => {
   dispatch(fetchLoading(true));
-  axios.get(url)
+  axios.get(url, { headers })
     .then((response) => {
       const items = response.data.teams.map(dat => dat);
       const swePlayers = [];

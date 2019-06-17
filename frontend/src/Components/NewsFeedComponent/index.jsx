@@ -18,7 +18,7 @@ class NewsFeedComponent extends Component {
   then parsing it to json via rss2json.com.
   */
   componentDidMount() {
-    axios.get('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.svenskafans.com%2Frss%2Fsite%2F11.aspx&api_key=zqx0lobt8y4x5sumbn23oe1yrk2zszur10ruetd5')
+    axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.svenskafans.com%2Frss%2Fsite%2F11.aspx&api_key=zqx0lobt8y4x5sumbn23oe1yrk2zszur10ruetd5`)
       .then((res) => {
         const news = res.data;
         this.setState({ news });

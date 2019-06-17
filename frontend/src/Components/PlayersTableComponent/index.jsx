@@ -19,7 +19,7 @@ class PlayersTableComponent extends Component {
   /* eslint-disable react/destructuring-assignment */
   // Runs when the component is mounted to the DOM
   componentDidMount = () => {
-    this.props.fetchPlayers('https://statsapi.web.nhl.com/api/v1/teams/?hydrate=roster(person(stats(splits=statsSingleSeason)))');
+    this.props.fetchPlayers(`${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/teams/?hydrate=roster(person(stats(splits=statsSingleSeason)))`);
   }
 
   // Column formatter with custom data used for creating clickable navlinks

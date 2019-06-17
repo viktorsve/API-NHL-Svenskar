@@ -30,9 +30,9 @@ class LatestResultsComponent extends Component {
     const days = new Date();
     days.setDate(days.getDate() - 30);
     const resDays = days.toISOString().slice(0, 10).replace(/-/g, '-');
-    const url = `https://statsapi.web.nhl.com/api/v1/schedule?startDate=${resDays}&endDate=${res}`;
+    const url = `${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/schedule?startDate=${resDays}&endDate=${res}`;
     this.props.fetchGames(url);
-    axios.get('https://statsapi.web.nhl.com/api/v1/teams/')
+    axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/teams/`)
       .then((response) => {
         this.setState({
           data: response.data.teams,

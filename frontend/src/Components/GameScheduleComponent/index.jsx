@@ -38,7 +38,7 @@ class GameScheduleComponent extends Component {
     const days = new Date();
     days.setDate(days.getDate() - 5);
     const resDays = days.toISOString().slice(0, 10).replace(/-/g, '-');
-    axios.get(`https://statsapi.web.nhl.com/api/v1/schedule?startDate=${resDays}&endDate=${res}`)
+    axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/schedule?startDate=${resDays}&endDate=${res}`)
       .then((response) => {
         const items = response.data.dates.map(dat => dat);
         const results = items.reverse();

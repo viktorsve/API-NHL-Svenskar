@@ -98,7 +98,7 @@ render() {
               </span>
             </Form.Group>
             <Modal.Footer>
-              <Link to="/register">Registrera</Link>
+              <Link to="/register">Skapa ett konto</Link>
               <Button variant="primary" type="submit">Logga in</Button>
             </Modal.Footer>
           </Form>

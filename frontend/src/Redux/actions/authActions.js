@@ -9,7 +9,7 @@ import {
 
 export const registerUser = (userData, history) => (dispatch) => {
   axios
-    .post('http://localhost:5000/register', userData)
+    .post('https://nhl-backend.herokuapp.com/register', userData)
     .then(res => history.push('/login'))
     .catch(err => dispatch({
       type: GET_ERRORS,
@@ -19,7 +19,7 @@ export const registerUser = (userData, history) => (dispatch) => {
 
 export const loginUser = userData => (dispatch) => {
   axios
-    .post('http://localhost:5000/login', userData)
+    .post('https://nhl-backend.herokuapp.com/login', userData)
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);
