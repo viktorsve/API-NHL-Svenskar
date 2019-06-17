@@ -28,31 +28,38 @@ class SinglePlayerComponent extends Component {
       starOrNot: true,
       singlePlayer: null,
       errorState: null,
-      likes: null,
+      likes: 0,
     };
   }
 
   componentDidMount() {
     const specificPlayerID = this.props.match.params.cell;
+    console.log(this.props);
 
     // Hämta användaren och styr vilken stjräna som ska visas, typ.
-    // const username = localStorage.getItem('username');
+    const username = localStorage.getItem('username');
 
-    // axios.get(`http://localhost:2000/counter/${username}`).then(res => {
-    //   if (res.data.id === Singleplayer.id) {
-    //     this.setState(prevState => ({
-    //       starOrNot: !prevState.starOrNot,
-    //     }));
-    //   }
-    // })
-
-    axios.get(`http://localhost:2000/counter/${specificPlayerID}`).then((res) => {
-      this.setState({
-        likes: res.data.count,
-      });
+    axios.get(`https://nhl-backend.herokuapp.com/login/${username}`).then((res) => {
+      if (this.props.auth.isAuthenticated) {
+        for (let i = 0; i < res.data.likedPlayers.length; i++) {
+          if (res.data.likedPlayers[i].playerId === specificPlayerID) {
+            this.setState(prevState => ({
+              starOrNot: !prevState.starOrNot,
+            }));
+          }
+        }
+      }
     });
 
-    axios.get(`https://statsapi.web.nhl.com/api/v1/people/${specificPlayerID}/?expand=person.stats&stats=yearByYear`)
+    axios.get(`https://nhl-backend.herokuapp.com/counter/${specificPlayerID}`).then((res) => {
+      if (res.data.count) {
+        this.setState({
+          likes: res.data.count,
+        });
+      }
+    });
+
+    axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/people/${specificPlayerID}/?expand=person.stats&stats=yearByYear`)
       .then((res) => {
         const singlePlayer = res.data;
         this.setState({ singlePlayer });
@@ -64,6 +71,9 @@ class SinglePlayerComponent extends Component {
   }
 
   likeOnePlayer = () => {
+    if (!this.props.auth.isAuthenticated) {
+      this.props.history.push('/login');
+    }
     // skapa en variabel som tar in användarens username.
     const username = localStorage.getItem('username');
     this.setState(prevState => ({
@@ -75,33 +85,36 @@ class SinglePlayerComponent extends Component {
       id: this.state.singlePlayer.people[0].id,
       count: 1,
     };
-    axios.put(`http://localhost:2000/counter/${specificPlayerID}`, player).then(res => console.log(res));
+    axios.put(`https://nhl-backend.herokuapp.com/counter/${specificPlayerID}`, player).catch(err => console.log(err));
 
     const playerToPost = {
       playerId: this.state.singlePlayer.people[0].id,
       name: this.state.singlePlayer.people[0].fullName,
     };
-    axios.post(`http://localhost:2000/counter/${username}`, playerToPost).then(res => console.log(res));
+    axios.post(`https://nhl-backend.herokuapp.com/login/${username}`, playerToPost).catch(err => console.log(err));
   }
 
 
-  dislikeOnePlayer = () => {
-    // skapa en variabel som tar in användarens username.
-    const username = 'pelle';
-    this.setState(prevState => ({
-      starOrNot: !prevState.starOrNot,
-      likes: prevState.likes - 1,
-    }));
-    const specificPlayerID = this.props.match.params.cell;
-    const player = {
-      id: this.state.singlePlayer.people[0].id,
-      count: -1,
-    };
-    axios.put(`http://localhost:2000/counter/${specificPlayerID}`, player).then(res => console.log(res));
-
-    axios.delete(`http://localhost:2000/login/${username}`, { playerId: specificPlayerID }).then(res => console.log(res));
+dislikeOnePlayer = () => {
+  if (!this.props.auth.isAuthenticated) {
+    this.props.history.push('/login');
   }
+  // skapa en variabel som tar in användarens username.
+  const username = localStorage.getItem('username');
+  this.setState(prevState => ({
+    starOrNot: !prevState.starOrNot,
+    likes: prevState.likes - 1,
+  }));
+  const specificPlayerID = this.props.match.params.cell;
+  const player = {
+    id: this.state.singlePlayer.people[0].id,
+    count: -1,
+  };
+  axios.put(`https://nhl-backend.herokuapp.com/counter/${specificPlayerID}`, player).catch(err => console.log(err));
 
+
+  axios.delete(`https://nhl-backend.herokuapp.com/login/${username}`, { data: { playerId: specificPlayerID } }).catch(err => console.log(err));
+}
 
   handleKeyEvent = () => {
     this.setState(prevState => ({
@@ -135,16 +148,19 @@ class SinglePlayerComponent extends Component {
           <img src={teamLogo} className={styles.teamLogo} alt="Logo" />
           {singlePlayer.fullName}
           {' '}
+
           #
           {singlePlayer.primaryNumber}
         </h3>
         <p>
           {singlePlayer.primaryPosition.type}
           {' '}
+
           |
           {' Ålder: '}
           {singlePlayer.currentAge}
           {' '}
+
           |
           {' Född: '}
           {singlePlayer.birthCity}
@@ -152,7 +168,7 @@ class SinglePlayerComponent extends Component {
         </p>
         <p>
           {' '}
-          Spara spelaren
+          Favoritmarkera spelaren
           {' '}
           {
             this.state.starOrNot ? (
@@ -191,8 +207,9 @@ class SinglePlayerComponent extends Component {
 // Connects our component with the data in our Redux store
 function mapStateToProps(state) {
   return {
-    players: state.players,
-    error: state.error,
+    players: state.player.players,
+    error: state.player.error,
+    auth: state.auth,
   };
 }
 
