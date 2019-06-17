@@ -1,35 +1,48 @@
 import axios from 'axios';
 
+import {
+  ADD_PLAYERS,
+  ADD_GAMES,
+  FETCH_LOADING,
+  FETCH_ERROR,
+} from './types';
+
+const headers = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
+};
+
 // Action creator that returns an action object
 export const addPlayers = items => ({
-  type: 'ADD_PLAYERS',
+  type: ADD_PLAYERS,
   players: items,
 });
 
 // Action creator that returns an action object
 export const addGames = items => ({
-  type: 'ADD_GAMES',
+  type: ADD_GAMES,
   games: items,
 });
 
 // Action creator that returns an action object
 export const fetchLoading = bool => ({
-  type: 'FETCH_LOADING',
+  type: FETCH_LOADING,
   loading: bool,
 });
 
 // Action creator that returns an action object
 export const fetchError = bool => ({
-  type: 'FETCH_ERROR',
+  type: FETCH_ERROR,
   error: bool,
 });
 
 // Using redux-thunk we can make our action creator return a
 // function instead of an action object. This allows us to make asynchronous
 // calls that we will dispatch the relevant data to our redux store when it is ready.
+
 export const fetchPlayers = url => (dispatch) => {
   dispatch(fetchLoading(true));
-  axios.get(url)
+  axios.get(url, { headers })
     .then((response) => {
       const items = response.data.teams.map(dat => dat);
       const swePlayers = [];

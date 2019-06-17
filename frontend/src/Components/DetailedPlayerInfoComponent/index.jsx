@@ -35,7 +35,7 @@ class DetailedPlayerInfoComponent extends Component {
   componentDidMount() {
     const specificPlayerID = this.props.match.params.cell;
 
-    axios.get(`https://statsapi.web.nhl.com/api/v1/people/${specificPlayerID}/?expand=person.stats&stats=yearByYear`)
+    axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/people/${specificPlayerID}/?expand=person.stats&stats=yearByYear`)
       .then((res) => {
         const detailedPlayerInfo = res.data;
         this.setState({ detailedPlayerInfo });
@@ -110,6 +110,7 @@ class DetailedPlayerInfoComponent extends Component {
                     data-placement="top"
                     title="Utvisningsminuter"
                   >
+
                   UM
                   </th>
                   <th className="sticky-top">+/-</th>

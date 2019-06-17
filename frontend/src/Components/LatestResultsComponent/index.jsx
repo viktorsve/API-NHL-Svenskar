@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import axios from 'axios';
-import { fetchGames } from '../../Redux/Action';
+import { fetchGames } from '../../Redux/actions/playerActions';
 import styles from './LatestResultsComponent.module.css';
 
 // Component used for displaying results
@@ -30,9 +30,9 @@ class LatestResultsComponent extends Component {
     const days = new Date();
     days.setDate(days.getDate() - 30);
     const resDays = days.toISOString().slice(0, 10).replace(/-/g, '-');
-    const url = `https://statsapi.web.nhl.com/api/v1/schedule?startDate=${resDays}&endDate=${res}`;
+    const url = `${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/schedule?startDate=${resDays}&endDate=${res}`;
     this.props.fetchGames(url);
-    axios.get('https://statsapi.web.nhl.com/api/v1/teams/')
+    axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/teams/`)
       .then((response) => {
         this.setState({
           data: response.data.teams,
@@ -90,14 +90,9 @@ class LatestResultsComponent extends Component {
 // Connects our component with the data in our Redux store
 function mapStateToProps(state) {
   return {
-    games: state.games,
-    error: state.error,
+    games: state.player.games,
+    error: state.player.error,
   };
 }
 
-// Used for dispatching actions to our store
-const mapDispatchToProps = {
-  fetchGames,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LatestResultsComponent);
+export default connect(mapStateToProps, { fetchGames })(LatestResultsComponent);

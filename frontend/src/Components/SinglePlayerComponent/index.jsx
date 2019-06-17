@@ -49,16 +49,19 @@ class SinglePlayerComponent extends Component {
           <img src={teamLogo} className={styles.teamLogo} alt="Logo" />
           {singlePlayer.fullName}
           {' '}
+
           #
           {singlePlayer.primaryNumber}
         </h3>
         <p>
           {singlePlayer.primaryPosition.type}
           {' '}
+
           |
           {' Ålder: '}
           {singlePlayer.currentAge}
           {' '}
+
           |
           {' Född: '}
           {singlePlayer.birthCity}
@@ -73,8 +76,8 @@ class SinglePlayerComponent extends Component {
 // Connects our component with the data in our Redux store
 function mapStateToProps(state) {
   return {
-    players: state.players,
-    error: state.error,
+    players: state.player.players,
+    error: state.player.error,
   };
 }
 
