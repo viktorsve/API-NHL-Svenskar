@@ -36,7 +36,7 @@ export default class StandingsComponent extends Component {
           byLeague: teams,
         });
       });
-    axios.get('https://statsapi.web.nhl.com/api/v1/standings/byConference')
+    axios.get(`${'https://cors-anywhere.herokuapp.com/'}https://statsapi.web.nhl.com/api/v1/standings/byConference`)
       .then((result) => {
         const westernItems = result.data.records[1].teamRecords;
         const westernTeams = [];
