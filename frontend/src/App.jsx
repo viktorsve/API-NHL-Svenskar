@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect, Provider } from 'react-redux';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import LoadingOverlay from 'react-loading-overlay';
