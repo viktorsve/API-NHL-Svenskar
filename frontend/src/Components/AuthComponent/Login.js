@@ -46,7 +46,6 @@ onSubmit = (e) => {
   };
 
   this.props.loginUser(userData);
-  console.log(this.props.auth.user);
 };
 
 render() {
