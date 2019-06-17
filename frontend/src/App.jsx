@@ -40,42 +40,40 @@ class App extends Component {
   render() {
     const { loading } = this.props;
     return (
-      <Provider store={store}>
-        <LoadingOverlay
-          active={loading}
-          spinner
-          styles={{
-            overlay: base => ({
-              ...base,
-              position: 'fixed',
-              overflow: 'visible',
-              margin: 'auto',
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-            }),
-          }}
-          text="Laddar innehåll..."
-        >
-          <Router>
-            <div className="App">
-              <NavbarComponent />
-              <Switch>
-                <Route exact path="/" component={Homepage} />
-                <Route path="/spelare/:cell" component={Player} />
-                <Route path="/spelare" component={Players} />
-                <Route path="/resultat" component={Results} />
-                <Route path="/tabell" component={Standings} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              </Switch>
-              <FooterComponent />
-            </div>
-          </Router>
-        </LoadingOverlay>
-      </Provider>
+      <LoadingOverlay
+        active={loading}
+        spinner
+        styles={{
+          overlay: base => ({
+            ...base,
+            position: 'fixed',
+            overflow: 'visible',
+            margin: 'auto',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+          }),
+        }}
+        text="Laddar innehåll..."
+      >
+        <Router>
+          <div className="App">
+            <NavbarComponent />
+            <Switch>
+              <Route exact path="/" component={Homepage} />
+              <Route path="/spelare/:cell" component={Player} />
+              <Route path="/spelare" component={Players} />
+              <Route path="/resultat" component={Results} />
+              <Route path="/tabell" component={Standings} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            </Switch>
+            <FooterComponent />
+          </div>
+        </Router>
+      </LoadingOverlay>
     );
   }
 }
